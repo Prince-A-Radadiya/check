@@ -2111,21 +2111,23 @@ html, body {
   overflow-x: hidden;
 }
 
-.account,
-.panel {
-  /* overflow-x: hidden; */
-}
 
 /* Mobile-only translateX limit */
 @media (max-width: 576px) {
   .panel .login {
-    transform: translateX(80px);
-    background-color: #1abc9c;
+    transform: translateX(160px);
+     width: 240px;
+    height: auto;
   }
 
   .panel .register {
-    transform: translateX(-80px);
+    transform: translateX(-150px);
   }
+    .panel .register .inner {
+    width: 260px;
+    height: auto;
+  }
+
 }
 
 /* ----- RESPONSIVE END ----- */
