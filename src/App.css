@@ -2115,17 +2115,17 @@ html, body {
 /* Mobile-only translateX limit */
 @media (max-width: 576px) {
   .panel .login {
-    transform: translateX(160px);
+    transform: translateX(95px);
      width: 240px;
-    height: auto;
+    /* height: auto; */
   }
 
   .panel .register {
-    transform: translateX(-150px);
+    transform: translateX(-100px);
   }
     .panel .register .inner {
     width: 260px;
-    height: auto;
+    /* height: auto; */
   }
 
 }
