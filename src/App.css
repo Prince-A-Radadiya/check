@@ -13,6 +13,13 @@
   --col-card-bg: #c6102e;
   --col-bg: #ffffff;
   --col-bg2: #f8f6f6;
+  
+  --background-body: #f1f1f1;
+  --color-primary: #292c3b;
+  --color-secondary: #f25d59;
+  --color-font: #aaabb0;
+  --color-font-2: #ffffff;
+
 }
 
 /* ----- HEADER START ----- */
@@ -1618,6 +1625,375 @@ CURATED SECTION
 /* ----- TRACK END ----- */
 
 
+/* ----- ACCOUNT START ----- */
+.bg {
+  width: 100%;
+  height: 50vh;
+  background: var(--background-body);
+  position: absolute;
+  top: -80px;
+  left: 0;
+  padding-bottom: 80px;
+  box-sizing: initial;
+  z-index: -1;
+  transform: skewY(5deg);
+}
+.account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--font-family);
+  color: var(--color-font);
+}
+
+/* PANEL */
+.panel {
+  width: 640px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LOGIN BOX */
+.panel .login {
+  width: 300px;
+  height: 380px;
+  background: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: translateX(140px);
+  position: relative;
+  z-index: 1;
+  transition: filter 0.5s;
+}
+
+.panel .login input[type="submit"] {
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 10px 0;
+  width: 150px;
+  background: transparent;
+  border-radius: 0 50px 50px 0;
+  border-left: none !important;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: var(--color-secondary) solid 1px;
+  color: var(--color-secondary);
+}
+
+/* REGISTER BOX */
+.panel .register {
+  transform: translateX(-140px);
+  position: relative;
+}
+
+.panel .register .button-open,
+.panel .register .button-close {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: transform 0.4s;
+  z-index: 9;
+}
+
+.panel .register .button-open::before,
+.panel .register .button-open::after,
+.panel .register .button-close::before,
+.panel .register .button-close::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: var(--color-font-2);
+  left: 10px;
+}
+
+.panel .register .button-open::after,
+.panel .register .button-close::after {
+  transform: rotate(90deg);
+}
+
+/* INNER REGISTER BOX */
+.panel .register .inner {
+  filter: blur(5px);
+  background: var(--color-secondary);
+  box-shadow: 5px 14px 20px 0 #ff7b76;
+  width: 340px;
+  height: 440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: filter 0.5s;
+}
+
+.panel .register input[type="submit"] {
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 10px 0;
+  width: 150px;
+  background: transparent;
+  border-radius: 0 50px 50px 0;
+  border-left: none !important;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: var(--color-font-2) solid 1px;
+  color: var(--color-font-2);
+}
+
+/* TITLES */
+.register h1,
+.login h1 {
+  text-align: center;
+  font-weight: 100;
+  letter-spacing: 2px;
+  margin-top: 0;
+  color: var(--color-font-2);
+}
+
+/* INPUT GROUPS */
+.group {
+  width: 100%;
+  position: relative;
+}
+
+.register .group input[type="text"],
+.register .group input[type="password"] {
+  width: 100%;
+  border: none;
+  color: var(--color-font-2);
+  padding: 14px 10px 14px 45px;
+  margin-top: 20px;
+  background: #ff7b76;
+  z-index: 2;
+  font-family: var(--font-family);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.register .group input::placeholder {
+  color: var(--color-font-2);
+}
+
+.register .group i {
+  color: var(--color-font-2);
+  position: absolute;
+  top: 36px;
+  left: 15px;
+  z-index: 3;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.register .group label {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  z-index: 1;
+  background: #ff8c89;
+  top: 19px;
+}
+
+.register .group label::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  background: #ea4a45;
+  transition: width 0.5s;
+}
+
+.register .group input:focus+label::before {
+  width: 100%;
+}
+
+/* LOGIN GROUP */
+.login .group input[type="text"],
+.login .group input[type="password"] {
+  width: 100%;
+  border: none;
+  color: var(--color-font);
+  padding: 14px 10px 14px 45px;
+  margin-top: 20px;
+  background: #35384a;
+  z-index: 2;
+  font-family: var(--font-family);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.login .group i {
+  color: var(--color-secondary);
+  position: absolute;
+  top: 36px;
+  left: 15px;
+  z-index: 3;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.login .group label {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  z-index: 1;
+  background: #3d4051;
+  top: 19px;
+}
+
+.login .group label::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 100%;
+  background: var(--color-secondary);
+  transition: width 0.5s;
+}
+
+.login .group input:focus+label::before {
+  width: 100%;
+}
+
+.button-close {
+  visibility: hidden;
+}
+
+/* RADIO BUTTONS HIDDEN */
+input[type="radio"] {
+  display: none;
+}
+
+/* ANIMATIONS */
+@keyframes loginOpen {
+  0% {
+    transform: translateX(140px);
+  }
+
+  50% {
+    transform: translateX(-145px);
+  }
+
+  100% {
+    transform: translateX(140px);
+    z-index: -1;
+  }
+}
+
+@keyframes registerOpen {
+  0% {
+    transform: translateX(-140px);
+  }
+
+  50% {
+    transform: translateX(145px);
+  }
+
+  100% {
+    transform: translateX(-140px);
+  }
+}
+
+@keyframes loginClose {
+  0% {
+    transform: translateX(140px);
+    z-index: -1;
+  }
+
+  50% {
+    transform: translateX(-145px);
+  }
+
+  100% {
+    transform: translateX(140px);
+    z-index: 1;
+  }
+}
+
+@keyframes registerClose {
+  0% {
+    transform: translateX(-140px);
+  }
+
+  50% {
+    transform: translateX(145px);
+  }
+
+  100% {
+    transform: translateX(-140px);
+  }
+}
+
+/* WHEN OPEN RADIO IS CHECKED */
+input#switch-open:checked~.login {
+  filter: blur(5px);
+  animation: loginOpen forwards 0.8s;
+}
+
+input#switch-open:checked~.register {
+  animation: registerOpen forwards 0.8s;
+}
+
+input#switch-open:checked~.register .inner {
+  filter: blur(0);
+}
+
+input#switch-open:checked~.register .button-open {
+  visibility: hidden;
+  transform: rotate(45deg);
+}
+
+input#switch-open:checked~.register .button-close {
+  visibility: visible;
+  transform: rotate(45deg);
+}
+
+/* WHEN CLOSE RADIO IS CHECKED */
+input#switch-close:checked~.login {
+  animation: loginClose forwards 0.8s;
+}
+
+input#switch-close:checked~.register {
+  animation: registerClose forwards 0.8s;
+}
+
+input#switch-close:checked~.register .inner {
+  filter: blur(5px);
+}
+
+.group input {
+  position: relative;
+  z-index: 5;
+}
+
+.group input:focus {
+  z-index: 20;
+}
+
+.group input {
+  position: relative;
+  z-index: 5;
+}
+
+.group input:focus {
+  z-index: 20;
+}
+
+.group label {
+  z-index: 1;
+}
+
+/* ----- ACCOUNT END ----- */
+
+
 
 
 
@@ -1631,6 +2007,12 @@ CURATED SECTION
 /* ----- RESPONSIVE START ----- */
 
 /* 991 SCREEN ONLY */
+@media screen and (min-width: 992px) and (max-width: 1200px) { 
+    .home .category .box{
+      padding: 50px 0;
+    }
+}
+
 @media (max-width: 991px) {
   .custom-dropdown {
     position: static;

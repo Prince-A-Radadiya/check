@@ -5,8 +5,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import { Routes, Route } from 'react-router-dom';
-
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from "react";
 
 // ------ COMPONENTS -------
@@ -32,7 +31,10 @@ import Shop from './Pages/Shop';
 
 function App() {
 
+  const location = useLocation(); // 👈 important
+
   const [allowed, setAllowed] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   const handleConfirm = () => {
     setAllowed(true);
@@ -40,26 +42,31 @@ function App() {
 
   const handleDeny = () => {
     window.location.href = "https://www.google.com";
-    // setAllowed(false);
   };
 
-  const [cartCount, setCartCount] = useState(0);
+  // 👇 Footer hide logic
+  const hideFooterRoutes = ["/account"];
+  const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
 
   return (
     <div>
 
-      <Header cartCount={cartCount} />
+      {!shouldHideFooter && <Header cartCount={cartCount} />}
+
 
       {!allowed && <AgeGate onConfirm={handleConfirm} onDeny={handleDeny} />}
+
       {allowed && (
         <Routes>
-
           <Route path='/' element={<Home setCartCount={setCartCount} />} />
           <Route path='/product' element={<Product setCartCount={setCartCount} />} />
+
           <Route path="/brand" element={<Brand />} />
+          <Route path="/brand/:brandSlug" element={<Product setCartCount={setCartCount} />} />
+
           <Route path="/collection" element={<Collection />} />
-          <Route path="/brand/:brandSlug" element={<Product />} />
-          <Route path="/collection/:collectionSlug" element={<Product />} />
+          <Route path="/collection/:collectionSlug" element={<Product setCartCount={setCartCount} />} />
+
           <Route path='/about-us' element={<About />} />
           <Route path='/how-we-deliver' element={<Deliver />} />
           <Route path='/track-my-order' element={<Trackorder />} />
@@ -70,11 +77,11 @@ function App() {
           <Route path='/add-to-cart' element={<Addtocart />} />
           <Route path='/faq' element={<Faq />} />
           <Route path='/*' element={<Error404 />} />
-
         </Routes>
       )}
 
-      <Footer />
+      {/* Footer hidden only on /account */}
+      {!shouldHideFooter && <Footer />}
 
     </div>
   );

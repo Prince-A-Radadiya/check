@@ -86,8 +86,8 @@ const Home = ({ setCartCount }) => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="row mt-4">
-                            <div className="col-3">
+                        <div className="row mt-4 gy-4">
+                            <div className="col-12 col-sm-6 col-lg-3">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -98,7 +98,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-sm-6 col-lg-3">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -109,7 +109,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-sm-6 col-lg-3">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -120,7 +120,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-3">
+                            <div className="col-12 col-sm-6 col-lg-3">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
