@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FiSearch, FiHeart, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useState, useEffect, useRef } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 import logo from "../Img/logo.png";
 import f1 from '../Img/f1.svg'
 import f2 from '../Img/f2.svg'
@@ -50,16 +51,16 @@ const Header = ({ cartCount }) => {
           <div className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}>
             <ul className="navbar-nav mx-auto">
 
-              <li className="nav-item">
+              <li className="nav-item my-1 my-lg-0">
                 <NavLink className="c-nav-link" to="/">Home</NavLink>
               </li>
 
-              <li className="nav-item">
+              <li className="nav-item my-1 my-lg-0">
                 <NavLink className="c-nav-link" to="/product">Product</NavLink>
               </li>
 
               <li
-                className="nav-item mega-parent"
+                className="nav-item mega-parent my-1 my-lg-0"
                 onMouseEnter={() => !isMobile && setBrandOpen(true)}
                 onMouseLeave={() => !isMobile && setBrandOpen(false)}>
                 <span
@@ -71,8 +72,8 @@ const Header = ({ cartCount }) => {
                     setFaqOpen(false);
                   }}
                 >
-                  <NavLink to='/brand' className='c-nav-link'>
-                    Brand ▾
+                  <NavLink to='/brand' className='c-nav-link d-flex align-items-center'>
+                    Brand <IoIosArrowDown className="d-lg-flex d-none ms-1"/>
                   </NavLink>
                   {isMobile && (
                     <span className={`arrow ${brandOpen ? "rotate" : ""}`}>▾</span>
@@ -81,7 +82,7 @@ const Header = ({ cartCount }) => {
 
                 <div className={`mega-menu ${brandOpen ? "open" : ""}`}>
                   <div className="container">
-                    <div className="row">
+                    <div className="row text-lg-center">
 
                       <div className="p-0 col-md-3 col-12">
                         <Link to='/brand/durex' className="text-uppercase m-0 my-1">durex</Link>
@@ -115,7 +116,7 @@ const Header = ({ cartCount }) => {
 
 
               <li
-                className="nav-item mega-parent"
+                className="nav-item mega-parent my-1 my-lg-0"
                 onMouseEnter={() => !isMobile && setColOpen(true)}
                 onMouseLeave={() => !isMobile && setColOpen(false)}>
                 <span
@@ -127,8 +128,8 @@ const Header = ({ cartCount }) => {
                     setFaqOpen(false);
                   }}
                 >
-                  <NavLink to='/collection' className='c-nav-link'>
-                    Collection ▾
+                  <NavLink to='/collection' className='c-nav-link d-flex align-items-center'>
+                    Collection <IoIosArrowDown className="d-lg-flex d-none ms-1"/>
                   </NavLink>
                   {isMobile && (
                     <span className={`arrow ${colOpen ? "rotate" : ""}`}>▾</span>
@@ -184,12 +185,12 @@ const Header = ({ cartCount }) => {
                 </div>
               </li>
 
-              <li className="nav-item">
+              <li className="nav-item my-1 my-lg-0">
                 <NavLink className="c-nav-link" to="/about-us">About</NavLink>
               </li>
 
               <li
-                className="nav-item mega-parent"
+                className="nav-item mega-parent my-1 my-lg-0"
                 onMouseEnter={() => !isMobile && setFaqOpen(true)}
                 onMouseLeave={() => !isMobile && setFaqOpen(false)}>
                 <span
@@ -201,8 +202,8 @@ const Header = ({ cartCount }) => {
                     setColOpen(false);
                   }}
                 >
-                  <NavLink to='/shop' className='c-nav-link'>
-                    Shopping & FAQs ▾
+                  <NavLink to='/shop' className='c-nav-link d-flex align-items-center'>
+                    Shopping & FAQs <IoIosArrowDown className="d-lg-flex d-none ms-1"/>
                   </NavLink>
                   {isMobile && (
                     <span className={`arrow ${faqOpen ? "rotate" : ""}`}>▾</span>
@@ -241,7 +242,7 @@ const Header = ({ cartCount }) => {
             </ul>
 
             {/* RIGHT ICONS */}
-            <div className="header-icons d-flex align-items-center gap-3 position-relative">
+            <div className="header-icons d-flex align-items-center gap-3 position-relative my-1 my-lg-0 ms-2 ms-lg-0">
 
               {/* DESKTOP SEARCH */}
               {!isMobile && searchOpen && (

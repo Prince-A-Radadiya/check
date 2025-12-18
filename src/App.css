@@ -101,6 +101,7 @@ header {
   font-size: 14px;
   transition: 0.25s;
   font-weight: 600;
+  /* text-align: center!important; */
 }
 
 .mega-menu a:hover {
