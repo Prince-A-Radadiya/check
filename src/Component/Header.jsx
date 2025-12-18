@@ -268,7 +268,7 @@ const Header = ({ cartCount }) => {
 
               <Link to="/wishlist"><FiHeart size={20} /></Link>
               <Link to="/account"><FaRegCircleUser size={20} /></Link>
-              <Link to="/cart" className="position-relative">
+              <Link to="/add-to-cart" className="position-relative">
                 <FiShoppingCart size={20} />
                 {cartCount > 0 && (
                   <span className="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

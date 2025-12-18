@@ -5,7 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif !important;
-  outline: none!important;
+  outline: none !important;
 }
 
 :root {
@@ -14,7 +14,7 @@
   --col-card-bg: #c6102e;
   --col-bg: #ffffff;
   --col-bg2: #f8f6f6;
-  
+
   --background-body: #f1f1f1;
   --color-primary: #292c3b;
   --color-secondary: #f25d59;
@@ -1092,8 +1092,7 @@ header {
 /* ================================
    ABOUT PAGE – PARENT
 ================================ */
-.about {
-}
+.about {}
 
 /* ================================
 CURATED SECTION
@@ -1213,6 +1212,7 @@ CURATED SECTION
     font-size: 15px;
   }
 }
+
 /* =====================================
    ABOUT – CORE VALUES
 ===================================== */
@@ -1342,12 +1342,13 @@ CURATED SECTION
 .faq {
   background: #ffffff;
 }
+
 .faq .faq__body {
   white-space: pre-line;
 }
 
 
-.faq h1{
+.faq h1 {
   font-weight: 800;
 }
 
@@ -1435,6 +1436,7 @@ CURATED SECTION
     font-size: 26px;
   }
 }
+
 /* REMOVE BLUE BORDER & SHADOW */
 .faq .accordion-button:focus {
   box-shadow: none;
@@ -1452,6 +1454,7 @@ CURATED SECTION
 .faq .accordion-item {
   border: none;
 }
+
 /* SMOOTH COLLAPSE ANIMATION */
 .faq .accordion-collapse {
   transition: height 0.45s ease, opacity 0.3s ease;
@@ -1475,17 +1478,20 @@ CURATED SECTION
 
 
 /* ----- RETURN & REFUND START ----- */
-.return-refund{
+.return-refund {
   padding: 50px 0;
 }
-.return-refund h1{
+
+.return-refund h1 {
   font-weight: 800;
 }
-.return-refund .policy{
+
+.return-refund .policy {
   font-size: 18px;
   font-weight: 550;
   color: var(--col-text2);
 }
+
 /* ----- RETURN & REFUND END ----- */
 
 
@@ -1519,6 +1525,7 @@ CURATED SECTION
     text-align: center;
     margin-left: 0 !important;
   }
+
   .deliver .packaging .box {
     flex-direction: column;
     text-align: center;
@@ -1639,6 +1646,7 @@ CURATED SECTION
   z-index: -1;
   transform: skewY(5deg);
 }
+
 .account {
   display: flex;
   justify-content: center;
@@ -1996,8 +2004,27 @@ input#switch-close:checked~.register .inner {
 
 
 
+/*--------------- 
+    BACKEND
+----------------*/
 
+/* ------- FOR ADMIN PAGES LAYOUT ------- */
 
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-content {
+  border-left: 1px solid #374151;
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #111825 !important;
+  /* background: #f5f5f5; */
+  color: var(--col-text1);
+}
+
+/* ------- FOR ADMIN PAGES LAYOUT ------- */
 
 
 
@@ -2008,10 +2035,10 @@ input#switch-close:checked~.register .inner {
 /* ----- RESPONSIVE START ----- */
 
 /* 991 SCREEN ONLY */
-@media screen and (min-width: 992px) and (max-width: 1200px) { 
-    .home .category .box{
-      padding: 50px 0;
-    }
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .home .category .box {
+    padding: 50px 0;
+  }
 }
 
 @media (max-width: 991px) {

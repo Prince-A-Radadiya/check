@@ -28,7 +28,7 @@ const Account = () => {
 
                 // Redirect by role
                 if (res.data.role === "admin") {
-                    navigate("/adminpanel");
+                    navigate("/admin-dashboard");
                 } else {
                     navigate("/");
                 }
@@ -56,7 +56,7 @@ const Account = () => {
                 localStorage.setItem("role", res.data.role);
 
                 if (res.data.role === "admin") {
-                    navigate("/adminpanel");
+                    navigate("/admin-dashboard");
                 } else {
                     navigate("/");
                 }
