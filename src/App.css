@@ -1670,7 +1670,7 @@ CURATED SECTION
 
 /* PANEL */
 .panel {
-  width: 640;
+  width: 640px;
   height: auto;
   display: flex;
   justify-content: center;
@@ -2099,10 +2099,32 @@ input#switch-close:checked~.register .inner {
   }
 }
 
-@media (max-width:576px){
+/* @media (max-width:576px){
   .panel .login{
   transform: translateX(150px);
 
   }
+} */
+ /* ===== FIX HORIZONTAL SCROLL ONLY ===== */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
+
+.account,
+.panel {
+  /* overflow-x: hidden; */
+}
+
+/* Mobile-only translateX limit */
+@media (max-width: 576px) {
+  .panel .login {
+    transform: translateX(80px);
+  }
+
+  .panel .register {
+    transform: translateX(-80px);
+  }
+}
+
 /* ----- RESPONSIVE END ----- */
