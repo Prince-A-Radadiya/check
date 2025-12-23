@@ -298,14 +298,27 @@ const Header = ({ cartCount }) => {
 
               <Link onClick={closeMobileMenu} to="/wishlist"><FiHeart size={20} /></Link>
               {/* ACCOUNT ICON */}
+
               <button
-                className="btn p-0"
+                className="btn p-0 d-flex align-items-center"
                 onClick={() => {
-                  handleAccountClick(); // navigate based on user login
-                  closeMobileMenu();    // close mobile menu
+                  handleAccountClick();
+                  closeMobileMenu();
                 }}
               >
-                <FaRegCircleUser size={20} />
+                {user ? (
+                  <img
+                    src={
+                      user.profile
+                        ? `http://localhost:9000${user.profile}`
+                        : "/img/user.webp"
+                    }
+                    alt="profile"
+                    className="rounded-circle header-profile-img"
+                  />
+                ) : (
+                  <FaRegCircleUser size={20} />
+                )}
               </button>
 
               <Link onClick={closeMobileMenu} to="/add-to-cart" className="position-relative">

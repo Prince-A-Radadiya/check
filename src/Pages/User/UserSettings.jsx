@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "../../Context/CartContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,22 +7,48 @@ const UserSettings = () => {
   const { user, setUser, logout } = useCart();
   const navigate = useNavigate();
 
-  const [fullname, setFullname] = useState(user?.fullname || "");
-  const [email, setEmail] = useState(user?.email || "");
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profile, setProfile] = useState(null);
+  const [preview, setPreview] = useState("");
   const [message, setMessage] = useState("");
 
-  // Update user info
+  // 🔥 SYNC USER DATA INTO INPUTS
+  useEffect(() => {
+    if (user) {
+      setFullname(user.fullname || "");
+      setEmail(user.email || "");
+      setPreview(
+        user.profile
+          ? `http://localhost:9000${user.profile}`
+          : "/img/user.webp"
+      );
+    }
+  }, [user]);
+
+  // UPDATE USER
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
       const token = localStorage.getItem("token");
 
+      const formData = new FormData();
+      formData.append("fullname", fullname);
+      formData.append("email", email);
+      if (password) formData.append("password", password);
+      if (profile) formData.append("profile", profile);
+
       const res = await axios.put(
         "http://localhost:9000/update",
-        { fullname, email, password },
-        { headers: { Authorization: `Bearer ${token}` } }
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       if (res.data.success) {
@@ -30,33 +56,55 @@ const UserSettings = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         setMessage("Profile updated successfully!");
       }
+
     } catch (err) {
       setMessage(err.response?.data?.message || "Update failed");
     }
   };
 
-  // Delete account
+  // DELETE ACCOUNT
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete your account?")) return;
+    if (!window.confirm("Are you sure?")) return;
 
     try {
       const token = localStorage.getItem("token");
-
       await axios.delete("http://localhost:9000/delete", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       logout();
       navigate("/");
+
     } catch (err) {
-      setMessage(err.response?.data?.message || "Delete failed");
+      setMessage("Delete failed");
     }
   };
 
   return (
     <div className="user-settings container py-4">
       <h3>User Settings</h3>
+
       {message && <p className="text-success">{message}</p>}
+
+      {/* PROFILE IMAGE */}
+      <div className="mb-3 text-center">
+        <img
+          src={preview}
+          alt="profile"
+          className="rounded-circle"
+          width="120"
+          height="120"
+        />
+        <input
+          type="file"
+          className="form-control mt-2"
+          accept="image/*"
+          onChange={(e) => {
+            setProfile(e.target.files[0]);
+            setPreview(URL.createObjectURL(e.target.files[0]));
+          }}
+        />
+      </div>
 
       <form onSubmit={handleUpdate}>
         <div className="form-group my-2">
@@ -106,13 +154,12 @@ const UserSettings = () => {
       <button
         className="btn btn-secondary ms-2"
         onClick={() => {
-          logout();           // clear user + cart
-          navigate("/"); // redirect to login/account page
+          logout();
+          navigate("/");
         }}
       >
         Logout
       </button>
-
     </div>
   );
 };
