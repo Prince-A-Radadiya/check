@@ -39,7 +39,7 @@ import ProductAdd from './Pages/Admin/ProductAdd';
 import ReturnRefund from './Pages/Admin/ReturnRefund';
 
 // Protector
-import AdminProtected from './Protected/AdminProtected';
+// import AdminProtected from './Protected/AdminProtected';
 
 function App() {
 
@@ -91,7 +91,7 @@ function App() {
       <Route path='/account' element={<Account />} />
 
       {/* ADMIN (NO HEADER / FOOT<ER) */}
-      <Route element={<AdminLayout />}>
+      {/* <Route element={<AdminLayout />}>
         <Route path='/Admin-dashboard' element={<AdminProtected><AdminDashboard /></AdminProtected>} />
         <Route path='/Admin-dashboard/product-add' element={<AdminProtected><ProductAdd /></AdminProtected>} />
         <Route path='/Admin-dashboard/inventory' element={<AdminProtected><Inventory /></AdminProtected>} />
@@ -101,7 +101,19 @@ function App() {
         <Route path='/Admin-dashboard/coupen-edit' element={<AdminProtected><CoupenEdit /></AdminProtected>} />
         <Route path='/Admin-dashboard/payments' element={<AdminProtected><Payment /></AdminProtected>} />
         <Route path='/Admin-dashboard/return-and-refund' element={<AdminProtected><ReturnRefund /></AdminProtected>} />
-      </Route>
+      </Route> */}
+      <Route element={<AdminLayout />}>
+    <Route path='/Admin-dashboard' element={<AdminDashboard />} />
+    <Route path='/Admin-dashboard/product-add' element={<ProductAdd />} />
+    <Route path='/Admin-dashboard/inventory' element={<Inventory />} />
+    <Route path='/Admin-dashboard/orders' element={<Orders />} />
+    <Route path='/Admin-dashboard/users' element={<User />} />
+    <Route path='/Admin-dashboard/coupen' element={<Coupen />} />
+    <Route path='/Admin-dashboard/coupen-edit' element={<CoupenEdit />} />
+    <Route path='/Admin-dashboard/payments' element={<Payment />} />
+    <Route path='/Admin-dashboard/return-and-refund' element={<ReturnRefund />} />
+</Route>
+
 
       <Route path='/*' element={<Error404 />} />
 
