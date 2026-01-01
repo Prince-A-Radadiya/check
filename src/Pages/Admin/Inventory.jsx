@@ -99,9 +99,20 @@ const Inventory = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setSelectedProduct({ ...selectedProduct, [name]: type === "checkbox" ? checked : value });
-    };
 
+        let newValue = value;
+
+        if (type === "checkbox") {
+            newValue = checked;
+        } else if (["price", "oldPrice", "stock"].includes(name)) {
+            newValue = Number(value);
+        }
+
+        setSelectedProduct(prev => ({
+            ...prev,
+            [name]: newValue,
+        }));
+    };
 
 
     /* ================= STATS ================= */
@@ -152,7 +163,7 @@ const Inventory = () => {
                             <div className="icon bg-success-soft"><FaDollarSign /></div>
                             <div>
                                 <p>Total Value</p>
-                                <h3>${totalValue.toFixed(2)}</h3>
+                                <h3>₹{totalValue.toFixed(2)}</h3>
                             </div>
                         </div>
                     </div>
@@ -220,7 +231,7 @@ const Inventory = () => {
                                     </td>
                                     <td>{product.sku}</td>
                                     <td>{product.category}</td>
-                                    <td>${product.price}</td>
+                                    <td>₹{product.price}</td>
                                     <td>
                                         <span className={`badge ${product.status ? "in-stock" : "low-stock"}`}>
                                             {product.status ? "Active" : "Inactive"}
@@ -263,11 +274,11 @@ const Inventory = () => {
                 {drawerOpen && selectedProduct && (
                     <div className="edit-drawer">
                         <div className="drawer-content">
-                            <div className="drawer-header d-flex justify-content-between align-items-center">
-                                <h5>Edit Product</h5>
+                            <div className="drawer-header pt-0 d-flex justify-content-between align-items-center">
+                                <h5 className="mb-0">Edit Product</h5>
                                 <button className="close-btn" onClick={closeDrawer}><FiX /></button>
                             </div>
-                            <div className="drawer-body">
+                            <div className="drawer-body pt-0">
                                 <label className="form-label">Title</label>
                                 <input className="form-control mb-2" name="title" value={selectedProduct.title} onChange={handleChange} />
 
@@ -279,6 +290,18 @@ const Inventory = () => {
 
                                 <label className="form-label">Price</label>
                                 <input className="form-control mb-2" name="price" value={selectedProduct.price} onChange={handleChange} />
+
+                                <label className="form-label">Old Price</label>
+                                <input
+                                    type="number"
+                                    className="form-control mb-2"
+                                    name="oldPrice"
+                                    value={selectedProduct.oldPrice || ""}
+                                    onChange={handleChange}
+                                />
+
+                                <label className="form-label">Stock</label>
+                                <input className="form-control mb-2" name="stock" value={selectedProduct.stock} onChange={handleChange} />
 
                                 <label className="form-label">Status</label>
                                 <div className="form-check form-switch mb-2">

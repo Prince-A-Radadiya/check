@@ -2864,6 +2864,10 @@ input#switch-close:checked~.register .inner {
   color: var(--text-main);
 }
 
+.dashboard-card .cancelled{
+  background-color: red!important;
+}
+
 .dashboard-card .table {
   border: none !important;
   margin: 0 !important;
@@ -3055,6 +3059,11 @@ input#switch-close:checked~.register .inner {
   outline: none;
 }
 
+.inventory-table .btn{
+  outline: none!important;
+  border: none;
+}
+
 .stat-card {
   background: #fff;
   padding: 16px;
@@ -3209,6 +3218,7 @@ input#switch-close:checked~.register .inner {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .drawer-header {

@@ -8,7 +8,7 @@ const UserSettings = () => {
   const { user, setUser, logout } = useCart();
   const navigate = useNavigate();
 
-  const [activeSection, setActiveSection] = useState("orders");
+  const [activeSection, setActiveSection] = useState("settings");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   /* =========================
@@ -287,26 +287,34 @@ const MyOrders = () => {
   };
 
   // Download invoice
-  const downloadInvoice = async (orderId) => {
-    try {
-      const token = localStorage.getItem("userToken");
-      const { data } = await axios.get(`http://localhost:9000/invoice/${orderId}`, {
+const downloadInvoice = async (orderId) => {
+  try {
+    const token = localStorage.getItem("userToken");
+
+    const { data } = await axios.get(
+      `http://localhost:9000/invoice/${orderId}`,
+      {
         headers: { Authorization: `Bearer ${token}` },
         responseType: "blob",
-      });
+      }
+    );
 
-      const url = window.URL.createObjectURL(new Blob([data], { type: "application/pdf" }));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `invoice-${orderId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (err) {
-      alert("Failed to download invoice");
-      console.error(err);
-    }
-  };
+    const url = window.URL.createObjectURL(
+      new Blob([data], { type: "application/pdf" })
+    );
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Invoice-${orderId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+  } catch (err) {
+    console.error(err);
+    alert("Failed to download invoice");
+  }
+};
 
   if (loading) return <div className="text-center py-5">Loading orders...</div>;
 
@@ -370,7 +378,7 @@ const MyOrders = () => {
 
                   <button
                     className="btn btn-outline-secondary btn-sm"
-                    onClick={() => downloadInvoice(order._id)}
+                    onClick={() => downloadInvoice(order.orderId)}
                   >
                     Invoice
                   </button>

@@ -26,7 +26,6 @@ import Faq from './Pages/User/Faq';
 import Error404 from './Pages/User/Error404';
 import Shop from './Pages/User/Shop';
 import UserSettings from './Pages/User/UserSettings';
-import ProductDetail from './Pages/User/ProductDetail';
 import Checkout from './Pages/User/Checkout';
 import OrderSuccess from './Pages/User/OrderSuccess';
 
@@ -40,9 +39,10 @@ import Orders from './Pages/Admin/Orders';
 import Payment from './Pages/Admin/Payment';
 import ProductAdd from './Pages/Admin/ProductAdd';
 import ReturnRefund from './Pages/Admin/ReturnRefund';
+import ProductDetail from './Pages/User/ProductDetail';
 
 // Protector
-// import AdminProtected from './Protected/AdminProtected';
+import AdminProtected from './Protected/AdminProtected';
 // import UserProtected from './Protected/UserProtected';
 
 function App() {
@@ -72,7 +72,6 @@ function App() {
       <Route element={<UserLayout />}>
         <Route path='/' element={<Home setCartCount={setCartCount} />} />
         <Route path='/product' element={<Product setCartCount={setCartCount} />} />
-        {/* <Route path='/product-details' element={<ProductDetail />} /> */}
         <Route path='/product/:id' element={<ProductDetail />} />
 
         <Route path="/brand" element={<Brand />} />

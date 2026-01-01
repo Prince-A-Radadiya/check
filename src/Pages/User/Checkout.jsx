@@ -114,7 +114,7 @@ const Checkout = () => {
               <div className="step">1</div>
               <h3>Contact Information</h3>
               <input
-                className="input"
+                className="input mb-0"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -141,7 +141,7 @@ const Checkout = () => {
                 <input className="input" placeholder="ZIP"
                   onChange={(e) => setShipping({ ...shipping, zip: e.target.value })} />
               </div>
-              <input className="input" placeholder="Phone"
+              <input className="input mb-0" placeholder="Phone"
                 onChange={(e) => setShipping({ ...shipping, phone: e.target.value })} />
             </div>
 
@@ -168,7 +168,13 @@ const Checkout = () => {
                     <input className="input" placeholder="MM / YY" />
                     <input className="input" placeholder="CVC" />
                   </div>
-                  <input className="input" placeholder="Cardholder name" />
+                  <input className="input mb-0" placeholder="Cardholder name" />
+                </>
+              )}
+
+              {payment === "upi" && (
+                <>
+               <input className="input mb-0" type="text" placeholder="Enter UPI Id" />
                 </>
               )}
             </div>
