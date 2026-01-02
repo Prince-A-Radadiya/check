@@ -76,25 +76,31 @@ const Orders = () => {
     };
 
     const downloadAllLabels = async () => {
-        const confirmedOrders = orders.filter((o) => o.orderStatus === "confirmed");
-        for (const order of confirmedOrders) {
+        const ordersToDownload = orders.filter(
+            o => o.orderStatus !== "pending" && !o.labelDownloaded
+        );
+
+        for (const order of ordersToDownload) {
             await downloadLabel(order._id);
         }
+
+        fetchOrders(); // refresh after download
     };
 
-    // ================= FILTER =================
-   const filteredOrders = orders.filter((order) => {
-    // Ignore cancelled orders older than 1 day
-    if (order.orderStatus === "cancelled") {
-        const cancelledTime = new Date(order.updatedAt);
-        const now = new Date();
-        const diffInHours = (now - cancelledTime) / (1000 * 60 * 60); // difference in hours
-        if (diffInHours > 24) return false; // skip cancelled orders older than 1 day
-    }
 
-    if (filterStatus === "all") return true;
-    return order.orderStatus === filterStatus;
-});
+    // ================= FILTER =================
+    const filteredOrders = orders.filter((order) => {
+        // Ignore cancelled orders older than 1 day
+        if (order.orderStatus === "cancelled") {
+            const cancelledTime = new Date(order.updatedAt);
+            const now = new Date();
+            const diffInHours = (now - cancelledTime) / (1000 * 60 * 60); // difference in hours
+            if (diffInHours > 24) return false; // skip cancelled orders older than 1 day
+        }
+
+        if (filterStatus === "all") return true;
+        return order.orderStatus === filterStatus;
+    });
 
 
     // ================= PAGINATION =================
@@ -116,24 +122,42 @@ const Orders = () => {
         return pages;
     };
 
+    const updateOrderStatus = async (orderId, status) => {
+        try {
+            await axios.put(
+                `http://localhost:9000/order/${orderId}`,
+                { orderStatus: status },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                    },
+                }
+            );
+            fetchOrders();
+        } catch (err) {
+            console.error("Status update failed:", err);
+        }
+    };
+
+
     return (
         <div className="admin">
             <Sidebar />
-            <div className="admin-content fade-in">
+            <div className="admin-content admin-order fade-in">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                            <h2 className="page-title fw-bold mb-0">Orders Management</h2>
-                            {/* <p className="page-subtitle">Manage, track and update customer orders</p> */}
-                
-                          <div className="d-flex align-items-center gap-3">
-                            <FaCog className="fs-5 cursor-pointer text-muted" />
-                
-                            <img
-                              src={require('../../Img/admin.webp')}
-                              alt="Admin"
-                              className="admin-avatar"
-                            />
-                          </div>
-                        </div>
+                    <h2 className="page-title fw-bold mb-0">Orders Management</h2>
+                    {/* <p className="page-subtitle">Manage, track and update customer orders</p> */}
+
+                    <div className="d-flex align-items-center gap-3">
+                        <FaCog className="fs-5 cursor-pointer text-muted" />
+
+                        <img
+                            src={require('../../Img/admin.webp')}
+                            alt="Admin"
+                            className="admin-avatar"
+                        />
+                    </div>
+                </div>
 
                 {/* ================= FILTER & ACTION BUTTONS ================= */}
                 <div className="mb-3 d-flex gap-2">
@@ -145,6 +169,9 @@ const Orders = () => {
                         <option value="all">All Orders</option>
                         <option value="pending">Pending</option>
                         <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
                     </select>
 
                     <button className="btn btn-success" onClick={acceptAllOrders}>
@@ -153,6 +180,18 @@ const Orders = () => {
                     <button className="btn btn-primary" onClick={downloadAllLabels}>
                         Download All Labels
                     </button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={downloadAllLabels}
+                        disabled={
+                            orders.filter(
+                                o => o.orderStatus !== "pending" && !o.labelDownloaded
+                            ).length === 0
+                        }
+                    >
+                        Download Pending Labels
+                    </button>
+
                 </div>
 
                 {/* ================= TABLE ================= */}
@@ -199,7 +238,7 @@ const Orders = () => {
                                         {index === 0 && (
                                             <>
                                                 <td rowSpan={order.items.length}>{order.orderId}
-                                                    <div>{item.productId.title || item.title}</div>
+                                                    <div>{item.productId.title || "Pr Name : " + item.title}</div>
                                                 </td>
                                                 <td rowSpan={order.items.length}>
                                                     <div className="customer">
@@ -212,22 +251,35 @@ const Orders = () => {
                                                 </td>
                                                 <td rowSpan={order.items.length}>₹{order.total}</td>
                                                 <td rowSpan={order.items.length}>
-                                                    {order.orderStatus === "pending" ? (
+
+                                                    {order.orderStatus === "pending" && (
                                                         <button
                                                             className="btn btn-success btn-sm"
-                                                            onClick={() => acceptOrder(order._id)}
+                                                            onClick={() => updateOrderStatus(order._id, "confirmed")}
                                                         >
                                                             Accept
                                                         </button>
-                                                    ) : (
+                                                    )}
+
+                                                    {order.orderStatus === "confirmed" && (
                                                         <button
-                                                            className="download-btn"
-                                                            onClick={() => downloadLabel(order._id)}
+                                                            className="btn btn-warning btn-sm"
+                                                            onClick={() => updateOrderStatus(order._id, "shipped")}
                                                         >
-                                                            ⬇️
+                                                            Ship
+                                                        </button>
+                                                    )}
+
+                                                    {order.orderStatus === "shipped" && (
+                                                        <button
+                                                            className="btn btn-primary btn-sm"
+                                                            onClick={() => updateOrderStatus(order._id, "delivered")}
+                                                        >
+                                                            Delivered
                                                         </button>
                                                     )}
                                                 </td>
+
                                             </>
                                         )}
                                     </tr>

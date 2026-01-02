@@ -36,7 +36,7 @@ const About = () => {
               <div className="row gy-4">
 
                 <div className="col-md-6">
-                  <div className="mission-card">
+                  <div className="mission-card" data-aos="fade-down-right">
                     <div className="icon-box heart">
                       <FaHeart />
                     </div>
@@ -49,7 +49,7 @@ const About = () => {
                 </div>
 
                 <div className="col-md-6">
-                  <div className="mission-card">
+                  <div className="mission-card" data-aos="fade-down-left">
                     <div className="icon-box spark">
                       <HiSparkles />
                     </div>
@@ -62,7 +62,7 @@ const About = () => {
                 </div>
 
                 <div className="col-md-12">
-                  <div className="mission-card">
+                  <div className="mission-card" data-aos="zoom-in">
                     <div className="icon-box edu">
                       <FaGraduationCap />
                     </div>
@@ -86,13 +86,13 @@ const About = () => {
           <div className="curated-card">
 
             {/* LEFT IMAGE */}
-            <div className="curated-image">
+            <div className="curated-image" data-aos="flip-left">
               {/* you will add image here */}
               <img src={require('../../Img/about.png')} alt="Curated products" />
             </div>
 
             {/* RIGHT CONTENT */}
-            <div className="curated-content">
+            <div className="curated-content" data-aos="flip-right">
               <h2>
                 Curated with <span>Care</span>
               </h2>
@@ -132,7 +132,7 @@ const About = () => {
           {/* VALUES GRID */}
           <div className="values-grid">
 
-            <div className="value-card red">
+            <div className="value-card red" data-aos="fade-up-right">
               <div className="icon">
                 <FaEyeSlash />
               </div>
@@ -143,7 +143,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="value-card yellow">
+            <div className="value-card yellow" data-aos="fade-up-right">
               <div className="icon">
                 <FaShieldAlt />
               </div>
@@ -154,7 +154,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="value-card red">
+            <div className="value-card red" data-aos="fade-up-right">
               <div className="icon">
                 <FaGem />
               </div>
@@ -165,7 +165,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="value-card yellow">
+            <div className="value-card yellow" data-aos="fade-up-right">
               <div className="icon">
                 <FaLock />
               </div>

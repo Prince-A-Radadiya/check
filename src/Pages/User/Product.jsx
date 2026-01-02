@@ -50,7 +50,7 @@ const ProductCard = ({ product, onAddToCart }) => {
   };
 
   return (
-    <div className="product-card">
+    <div className="product-card" data-aos="fade-up">
       <Link to={`/product/${product.id}`}>
         <div className="product-image">
           {product.discount && (
@@ -94,11 +94,18 @@ const ProductCard = ({ product, onAddToCart }) => {
             className="add-cart"
             onClick={(e) => {
               e.stopPropagation();
+
+              if (product.stock <= 0) {
+                alert("❌ Out of stock");
+                return;
+              }
+
               onAddToCart();
             }}
           >
             Add to cart
           </button>
+
         </div>
       </div>
     </div>
@@ -307,16 +314,11 @@ const Product = () => {
           oldPrice: p.oldPrice || p.price * 2,
 
           brand: p.brand?.toLowerCase() || "",
-
           gender: p.gender?.toLowerCase() || "",
-
           usageType: p.usageType?.toLowerCase() || "",
-
           condomType: p.condomType?.toLowerCase() || "thin",
 
-          suitableFor: p.suitable
-            ? [p.suitable.toLowerCase()]
-            : [],
+          suitableFor: p.suitable ? [p.suitable.toLowerCase()] : [],
 
           rating: 4,
 
@@ -329,9 +331,13 @@ const Product = () => {
             : require("../../Img/t1.png"),
 
           freeLube: p.freeLube,
+
+          stock: p.stock, // ✅ ADD THIS LINE ONLY
+
           isNew: i % 4 === 0,
           isBestSeller: i % 6 === 0,
         }));
+
         setPRODUCTS(mapped);
       });
   }, []);

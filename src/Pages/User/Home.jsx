@@ -76,7 +76,7 @@ const Home = ({ setCartCount }) => {
 
                 <section className="category">
                     <div className="container">
-                        <div className="row">
+                        <div className="row" data-aos="fade-right">
                             <div className="col">
                                 <h3 className="text-capitalize m-0">shop by category</h3>
                             </div>
@@ -87,7 +87,7 @@ const Home = ({ setCartCount }) => {
                             </div>
                         </div>
                         <div className="row mt-4 gy-4">
-                            <div className="col-12 col-sm-6 col-lg-3">
+                            <div className="col-12 col-sm-6 col-lg-3" data-aos="zoom-in">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -98,7 +98,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-12 col-sm-6 col-lg-3">
+                            <div className="col-12 col-sm-6 col-lg-3" data-aos="zoom-in">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -109,7 +109,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-12 col-sm-6 col-lg-3">
+                            <div className="col-12 col-sm-6 col-lg-3" data-aos="zoom-in">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -120,7 +120,7 @@ const Home = ({ setCartCount }) => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-12 col-sm-6 col-lg-3">
+                            <div className="col-12 col-sm-6 col-lg-3" data-aos="zoom-in">
                                 <Link to='#'>
                                     <div className="box">
                                         <div className="logo">
@@ -137,7 +137,7 @@ const Home = ({ setCartCount }) => {
 
                 <section className="trend">
                     <div className="container">
-                        <div className="d-flex justify-content-between align-items-center mb-4">
+                        <div className="d-flex justify-content-between align-items-center mb-4" data-aos="fade-right">
                             <div>
                                 <h3 className="section-title text-black">Trending Now</h3>
                                 <p className="section-subtitle">
@@ -152,7 +152,7 @@ const Home = ({ setCartCount }) => {
                                     key={product.id}
                                     className="col-12 col-sm-6 col-md-4 col-lg-3"
                                 >
-                                    <div className="product-card h-100">
+                                    <div className="product-card h-100"  data-aos="flip-down">
                                         <div className="product-img">
                                             {product.tag && (
                                                 <span className="badge-tag">{product.tag}</span>
@@ -200,7 +200,7 @@ const Home = ({ setCartCount }) => {
                     </div>
                 </section>
 
-                <section className="offer">
+                <section className="offer" data-aos="fade-down-left">
                     <div className="container">
                         <div className="row">
                             <div className="col">

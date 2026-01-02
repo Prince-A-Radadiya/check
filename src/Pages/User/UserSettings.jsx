@@ -332,7 +332,7 @@ const downloadInvoice = async (orderId) => {
                 {/* LEFT */}
                 <div className="col-md-8">
                   <p className="mb-1">
-                    <strong>Order ID:</strong> {order._id}
+                    <strong>Order ID:</strong> {order.orderId}
                   </p>
                   <p className="mb-1">
                     <strong>Date:</strong>{" "}

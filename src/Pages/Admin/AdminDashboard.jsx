@@ -33,6 +33,14 @@ ChartJS.register(
   Legend
 );
 
+const ORDER_STATUS_COLORS = {
+  pending: "#6c757d",    // grey
+  confirmed: "#3b82f6",  // blue
+  shipped: "#facc15",    // yellow
+  delivered: "#22c55e",  // green
+  cancelled: "#ef4444",  // red
+};
+
 const AdminDashboard = () => {
   const [stats, setStats] = useState({
     totalRevenue: 0,
@@ -58,22 +66,21 @@ const AdminDashboard = () => {
     }
     return dates;
   };
+
   const ringData = {
     labels: orderStatus.map(s => s._id),
     datasets: [
       {
         data: orderStatus.map(s => s.count),
-        backgroundColor: [
-          "#facc15", // pending - yellow
-          "#22c55e", // confirmed - green
-          "#ef4444", // cancelled - red
-          "#3b82f6", // shipped - blue
-        ],
+        backgroundColor: orderStatus.map(
+          s => ORDER_STATUS_COLORS[s._id] || "#000000"
+        ),
         borderWidth: 0,
         cutout: "75%",
       },
     ],
   };
+
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -202,14 +209,14 @@ const AdminDashboard = () => {
                 </div>
 
                 <ul className="list-unstyled text-start small mt-3">
-                  {orderStatus.map((s, i) => (
+                  {orderStatus.map((s) => (
                     <li key={s._id} className="d-flex align-items-center gap-2">
                       <span
                         style={{
                           width: 10,
                           height: 10,
                           borderRadius: "50%",
-                          backgroundColor: ringData.datasets[0].backgroundColor[i],
+                          backgroundColor: ORDER_STATUS_COLORS[s._id],
                           display: "inline-block",
                         }}
                       ></span>
@@ -232,7 +239,7 @@ const StatCard = ({ title, value, icon, color }) => (
     <div className="card dashboard-card">
       <div className="card-body d-flex justify-content-between">
         <div><p className="text-muted mb-1">{title}</p><h5 className="mb-0">{value}</h5></div>
-        <div className={`icon-box text-${color}`}>{icon}</div>
+        <div className={`icon-box text-${color} d-flex mt-1`}>{icon}</div>
       </div>
     </div>
   </div>

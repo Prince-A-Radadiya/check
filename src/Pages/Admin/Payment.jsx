@@ -5,43 +5,43 @@ import axios from "axios";
 
 const Payment = () => {
     const [transactionsData, setTransactionsData] = useState([]);
-const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchPayments = async () => {
-    try {
-      const token = localStorage.getItem("adminToken");
-      const res = await axios.get(
-        "http://localhost:9000/payments",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                const token = localStorage.getItem("adminToken");
+                const res = await axios.get(
+                    "http://localhost:9000/payments",
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
 
-      setTransactionsData(res.data.payments || []);
-      setLoading(false);
-    } catch (err) {
-      console.error("Payment fetch error:", err);
-      setLoading(false);
-    }
-  };
+                setTransactionsData(res.data.payments || []);
+                setLoading(false);
+            } catch (err) {
+                console.error("Payment fetch error:", err);
+                setLoading(false);
+            }
+        };
 
-  fetchPayments();
-}, []);
+        fetchPayments();
+    }, []);
 
-    const itemsPerPage = 5; // ✅ UPDATED
-
+    const itemsPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1);
     const [filterStatus, setFilterStatus] = useState("All");
 
-    // 🔹 Filter logic
+    /* ================= FILTER ================= */
     const filteredData =
-  filterStatus === "All"
-    ? transactionsData
-    : transactionsData.filter(
-        item => item.status.toLowerCase() === filterStatus.toLowerCase()
-      );
+        filterStatus === "All"
+            ? transactionsData
+            : transactionsData.filter(
+                  item =>
+                      item.status.toLowerCase() ===
+                      filterStatus.toLowerCase()
+              );
 
-
-    // 🔹 Pagination logic
+    /* ================= PAGINATION ================= */
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentData = filteredData.slice(
@@ -50,24 +50,45 @@ useEffect(() => {
     );
 
     if (loading) {
-  return (
-    <div className="admin">
-      <Sidebar />
-      <div className="admin-content p-4">Loading payments...</div>
-    </div>
-  );
-}
- const totalRevenue = transactionsData
-  .filter(t => t.status === "Paid")
-  .reduce((sum, t) => sum + t.amount, 0);
+        return (
+            <div className="admin">
+                <Sidebar />
+                <div className="admin-content p-4">
+                    Loading payments...
+                </div>
+            </div>
+        );
+    }
 
-const pendingAmount = transactionsData
-  .filter(t => t.status === "Pending")
-  .reduce((sum, t) => sum + t.amount, 0);
+    /* ================= STATS (FIXED) ================= */
 
-const failedCount = transactionsData.filter(
-  t => t.status === "Failed"
-).length;
+    // Revenue = PAID only (exclude refunded & failed)
+    const totalRevenue = transactionsData
+        .filter(t => t.status === "Paid")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+    // Pending = unpaid COD / pending gateway
+    const pendingAmount = transactionsData
+        .filter(t => t.status === "Pending")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+    // Failed count
+    const failedCount = transactionsData.filter(
+        t => t.status === "Failed"
+    ).length;
+
+    // COD vs ONLINE (internal use, future graph ready)
+    const codTotal = transactionsData
+        .filter(t => t.method === "COD" && t.status === "Paid")
+        .reduce((sum, t) => sum + t.amount, 0);
+
+    const onlineTotal = transactionsData
+        .filter(
+            t =>
+                t.method !== "COD" &&
+                t.status === "Paid"
+        )
+        .reduce((sum, t) => sum + t.amount, 0);
 
     return (
         <div className="admin">
@@ -76,12 +97,13 @@ const failedCount = transactionsData.filter(
             <div className="admin-content payment-page">
                 {/* HEADER */}
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h2 className="fw-bold mb-0">Payments Management</h2>
+                    <h2 className="fw-bold mb-0">
+                        Payments Management
+                    </h2>
                     <div className="d-flex align-items-center gap-3">
                         <FaCog className="fs-5 cursor-pointer text-muted" />
-
                         <img
-                            src={require('../../Img/admin.webp')}
+                            src={require("../../Img/admin.webp")}
                             alt="Admin"
                             className="admin-avatar"
                         />
@@ -90,28 +112,48 @@ const failedCount = transactionsData.filter(
 
                 {/* FILTER BUTTONS */}
                 <div className="btn-group mb-4">
-                    {["All", "Paid", "Pending", "Failed"].map((status) => (
-                        <button
-                            key={status}
-                            className={`btn filter-btn ${filterStatus === status ? "active" : ""
+                    {["All", "Paid", "Pending", "Failed"].map(
+                        status => (
+                            <button
+                                key={status}
+                                className={`btn filter-btn ${
+                                    filterStatus === status
+                                        ? "active"
+                                        : ""
                                 }`}
-                            onClick={() => {
-                                setFilterStatus(status);
-                                setCurrentPage(1); // reset pagination
-                            }}
-                        >
-                            {status}
-                        </button>
-                    ))}
+                                onClick={() => {
+                                    setFilterStatus(status);
+                                    setCurrentPage(1);
+                                }}
+                            >
+                                {status}
+                            </button>
+                        )
+                    )}
                 </div>
 
                 {/* STATS */}
                 <div className="row g-3 mb-4">
-                   <StatCard title="Total Revenue" value={`₹${totalRevenue}`} color="green" />
-<StatCard title="Pending Payouts" value={`₹${pendingAmount}`} color="blue" />
-<StatCard title="Refund Rate" value="—" color="orange" />
-<StatCard title="Failed Txns" value={failedCount} color="red" />
-
+                    <StatCard
+                        title="Total Revenue"
+                        value={`₹${totalRevenue}`}
+                        color="green"
+                    />
+                    <StatCard
+                        title="Pending Payouts"
+                        value={`₹${pendingAmount}`}
+                        color="blue"
+                    />
+                    <StatCard
+                        title="Refund Rate"
+                        value="—"
+                        color="orange"
+                    />
+                    <StatCard
+                        title="Failed Txns"
+                        value={failedCount}
+                        color="red"
+                    />
                 </div>
 
                 {/* TABLE */}
@@ -130,8 +172,11 @@ const failedCount = transactionsData.filter(
 
                             <tbody>
                                 {currentData.length > 0 ? (
-                                    currentData.map((item) => (
-                                        <tr key={item.id} className="fade-in">
+                                    currentData.map(item => (
+                                        <tr
+                                            key={item.id}
+                                            className="fade-in"
+                                        >
                                             <td>
                                                 <span
                                                     className={`status-badge ${item.status.toLowerCase()}`}
@@ -142,24 +187,35 @@ const failedCount = transactionsData.filter(
                                             <td>
                                                 <strong>{item.id}</strong>
                                                 <br />
-<small className="text-muted">
-  {new Date(item.date).toLocaleString()}
-</small>
-
+                                                <small className="text-muted">
+                                                    {new Date(
+                                                        item.date
+                                                    ).toLocaleString()}
+                                                </small>
                                             </td>
                                             <td>
-                                                <strong>{item.customer}</strong>
+                                                <strong>
+                                                    {item.customer}
+                                                </strong>
                                                 <br />
-                                                <small className="text-muted">{item.email}</small>
+                                                <small className="text-muted">
+                                                    {item.email}
+                                                </small>
                                             </td>
-                                            <td className="fw-bold">₹{item.amount}</td>
+                                            <td className="fw-bold">
+                                                ₹{item.amount}
+                                            </td>
                                             <td>{item.method}</td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" className="text-center py-4">
-                                            No {filterStatus} transactions found
+                                        <td
+                                            colSpan="5"
+                                            className="text-center py-4"
+                                        >
+                                            No {filterStatus} transactions
+                                            found
                                         </td>
                                     </tr>
                                 )}
@@ -167,12 +223,14 @@ const failedCount = transactionsData.filter(
                         </table>
 
                         {/* PAGINATION */}
-                        {filteredData.length > itemsPerPage && (
+                        {filteredData.length >
+                            itemsPerPage && (
                             <div className="d-flex justify-content-between align-items-center">
                                 <small>
                                     Showing {startIndex + 1} to{" "}
                                     {Math.min(
-                                        startIndex + itemsPerPage,
+                                        startIndex +
+                                            itemsPerPage,
                                         filteredData.length
                                     )}{" "}
                                     of {filteredData.length}
@@ -182,15 +240,21 @@ const failedCount = transactionsData.filter(
                                     <button
                                         className="btn btn-sm border border-secondary btn-outline-secondary me-2"
                                         disabled={currentPage === 1}
-                                        onClick={() => setCurrentPage((p) => p - 1)}
+                                        onClick={() =>
+                                            setCurrentPage(p => p - 1)
+                                        }
                                     >
                                         Previous
                                     </button>
 
                                     <button
                                         className="btn btn-sm border border-primary btn-outline-primary"
-                                        disabled={currentPage === totalPages}
-                                        onClick={() => setCurrentPage((p) => p + 1)}
+                                        disabled={
+                                            currentPage === totalPages
+                                        }
+                                        onClick={() =>
+                                            setCurrentPage(p => p + 1)
+                                        }
                                     >
                                         Next
                                     </button>
@@ -205,10 +269,6 @@ const failedCount = transactionsData.filter(
 };
 
 const StatCard = ({ title, value, color }) => {
-
-   
-
-
     return (
         <div className="col-lg-3 col-md-6">
             <div className={`stat-card ${color}`}>

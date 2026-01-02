@@ -312,7 +312,7 @@ const Inventory = () => {
                                         checked={selectedProduct.status}
                                         onChange={handleChange}
                                     />
-                                    <label className="form-check-label">{selectedProduct.status ? "Active" : "Inactive"}</label>
+                                    <label className="form-check-label mt-1">{selectedProduct.status ? "Active" : "Inactive"}</label>
                                 </div>
 
                                 <button className="btn btn-primary mt-3" onClick={handleSave}>Save Changes</button>

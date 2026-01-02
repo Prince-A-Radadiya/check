@@ -1,9 +1,16 @@
+// CUSTOM CSS
 import './App.css';
+
+// BOOTSTRAP CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+// ANIMATION ON SCROLL CSS
+import 'aos/dist/aos.css';
+import AOS from "aos";
+
 import { Routes, Route } from 'react-router-dom';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Layouts
 import UserLayout from './Layout/UserLayout';
@@ -46,7 +53,16 @@ import AdminProtected from './Protected/AdminProtected';
 // import UserProtected from './Protected/UserProtected';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: "ease-in-out",
+      once: false,     // 🔥 IMPORTANT
+      mirror: true,    // 🔥 animate again when scrolling up
+      offset: 100,
+    });
 
+  }, []);
   const [cartCount, setCartCount] = useState(0);
 
   const [allowed, setAllowed] = useState(() => {
@@ -90,15 +106,15 @@ function App() {
         <Route path='/faq' element={<Faq />} />
         <Route path='/user-settings' element={<UserSettings />} />
         <Route path='/checkout' element={<Checkout />} />
-        <Route path='/order-success' element={<OrderSuccess />} />
 
       </Route>
 
       {/* ACCOUNT (NO HEADER / FOOTER) */}
       <Route path='/account' element={<Account />} />
+      <Route path='/order-success' element={<OrderSuccess />} />
 
       {/* ADMIN (NO HEADER / FOOT<ER) */}
-      {/* <Route element={<AdminLayout />}>
+      <Route element={<AdminLayout />}>
         <Route path='/Admin-dashboard' element={<AdminProtected><AdminDashboard /></AdminProtected>} />
         <Route path='/Admin-dashboard/product-add' element={<AdminProtected><ProductAdd /></AdminProtected>} />
         <Route path='/Admin-dashboard/inventory' element={<AdminProtected><Inventory /></AdminProtected>} />
@@ -108,9 +124,9 @@ function App() {
         <Route path='/Admin-dashboard/coupen-edit' element={<AdminProtected><CoupenEdit /></AdminProtected>} />
         <Route path='/Admin-dashboard/payments' element={<AdminProtected><Payment /></AdminProtected>} />
         <Route path='/Admin-dashboard/return-and-refund' element={<AdminProtected><ReturnRefund /></AdminProtected>} />
-      </Route> */}
+      </Route>
 
-      <Route element={<AdminLayout />}>
+      {/* <Route element={<AdminLayout />}>
         <Route path='/Admin-dashboard' element={<AdminDashboard />} />
         <Route path='/Admin-dashboard/product-add' element={<ProductAdd />} />
         <Route path='/Admin-dashboard/inventory' element={<Inventory />} />
@@ -120,7 +136,7 @@ function App() {
         <Route path='/Admin-dashboard/coupen-edit' element={<CoupenEdit />} />
         <Route path='/Admin-dashboard/payments' element={<Payment />} />
         <Route path='/Admin-dashboard/return-and-refund' element={<ReturnRefund />} />
-      </Route>
+      </Route> */}
 
 
       <Route path='/*' element={<Error404 />} />
